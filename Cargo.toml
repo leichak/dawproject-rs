@@ -1,0 +1,30 @@
+[package]
+name = "dawproject-rs"
+version = "0.1.0"
+authors = ["Dan K <dankaczor@icloud.com>"]
+edition = "2021"
+
+# Metadata
+license = "NON-AI-MIT"
+description = "Open exchange format for user data between Digital Audio Workstations (DAWs) based on DawProject in Rust."
+homepage = "https://github.com/leichak"
+documentation = "https://github.com/leichak/dawproject-rs/README.md"
+repository = "https://github.com/leichak/dawproject-rs"
+readme = "README.md"
+
+[dependencies]
+xml = "0.8.10"
+quick-xml = {version = "0.31.0", features = ["serialize"]}
+serde = {version = "1.0.192"   ,  features = ["derive"] }
+uuid = { version = "1.6.1", features = [
+    "v4",                
+    "fast-rng",          
+    "macro-diagnostics", 
+]}
+zip = "0.6.6"
+strum = { version = "0.26", features = ["derive"] }
+fake = { version = "2.9.2", features = ["derive", "always-true-rng"] }
+dotenv = "0.15.0"
+cargo-limit = "0.0.10"
+once_cell = "1.19.0"
+
