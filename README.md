@@ -18,6 +18,8 @@ To run all tests create "tests" folder in the main folder.
 
 Original repository with commit tree leading to the first version is private. This ensures clarity in the commit tree to be able to built on top. 
 
+Simple example is available in mod examples. Current version has couple rough spots that will be resolved soon, for example improving API. 
+
 ## Contributing
 
 We welcome contributions from the community! 
