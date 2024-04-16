@@ -9,25 +9,15 @@ use {
 #[serde(rename = "camelCase")]
 pub enum ExpressionTypeEnum {
     Gain,
-
     Pan,
-
     Transpose,
-
     Timbre,
-
     Formant,
-
     Pressure,
-
     ChannelController,
-
     ChannelPressure,
-
     PolyPressure,
-
     PitchBend,
-
     ProgramChange,
 }
 
