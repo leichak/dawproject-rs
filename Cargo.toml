@@ -4,13 +4,13 @@ version = "0.1.0"
 authors = ["Dan K <dankaczor@icloud.com>"]
 edition = "2021"
 
-# Metadata
 license = "NON-AI-MIT"
 description = "Open exchange format for user data between Digital Audio Workstations (DAWs) based on DawProject in Rust."
 homepage = "https://github.com/leichak"
 documentation = "https://github.com/leichak/dawproject-rs/README.md"
 repository = "https://github.com/leichak/dawproject-rs"
 readme = "README.md"
+license-file = "LICENSE"
 
 [dependencies]
 xml = "0.8.10"
