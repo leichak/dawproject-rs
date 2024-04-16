@@ -127,8 +127,6 @@ impl DawProject {
             Err(err) => return Err(err),
         };
 
-        println!("{}", &project_xml);
-
         let meta_data_xml = match Self::to_xml(ObjectType::M(meta_data)) {
             Ok(s) => s,
             Err(err) => return Err(err),
