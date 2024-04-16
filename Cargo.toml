@@ -1,6 +1,6 @@
 [package]
 name = "dawproject-rs"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Dan K <dankaczor@icloud.com>"]
 edition = "2021"
 
@@ -9,7 +9,7 @@ homepage = "https://github.com/leichak"
 documentation = "https://github.com/leichak/dawproject-rs/README.md"
 repository = "https://github.com/leichak/dawproject-rs"
 readme = "README.md"
-license-file = "LICENSE.txt"
+license-file = "LICENSE"
 
 [dependencies]
 xml = "0.8.10"
