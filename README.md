@@ -26,7 +26,9 @@ We welcome contributions from the community!
 
 Todo:
 
-- ensure full-compatibility with original DawProject repository. 
+- clean-up naming
+- ensure full-compatibility with original DawProject repository when saving / loading by comparing XML content.
+- provide helper functions for all structs useful when creating
 
 ## License
 
