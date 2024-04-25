@@ -27,7 +27,6 @@ enum SceneSequenceEnum {
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Scene {
-    // extends referenceable
     #[serde(rename = "@id")]
     id: Option<String>,
     #[serde(rename = "@name")]

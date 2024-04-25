@@ -29,7 +29,7 @@ pub struct Structure {
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Project {
     #[serde(rename = "@version")]
-    pub version: String, // assign 1.0
+    pub version: String,
     #[serde(rename = "Application")]
     pub application: Application,
     #[serde(rename = "Transport")]

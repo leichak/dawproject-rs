@@ -40,7 +40,7 @@ pub enum ChannelParameters {
     Volume(Option<RealParameter>),
     Pan(Option<RealParameter>),
     Mute(Option<BoolParameter>),
-    Devices(Option<Devices>), //
+    Devices(Option<Devices>),
     Sends(Option<Vec<Send>>),
 }
 
