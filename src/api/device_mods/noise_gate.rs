@@ -21,7 +21,6 @@ type NoiseGateParams = Vec<NoiseGateParamsEnum>;
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct NoiseGate {
-    // Extnds builtInDevice
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,

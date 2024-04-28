@@ -30,7 +30,6 @@ pub struct ClipSlot {
     #[serde(rename = "@timeUnit")]
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub time_unit: Option<TimeUnit>,
-
     #[serde(default)]
     #[serde(skip_serializing_if = "Option::is_none")]
     clips: Option<Vec<Clip>>,

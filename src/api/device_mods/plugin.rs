@@ -10,7 +10,6 @@ use {
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Plugin {
-    // Extends device
     #[serde(rename = "@id")]
     id: Option<String>,
     #[serde(rename = "$value", default)]

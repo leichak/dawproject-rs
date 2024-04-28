@@ -20,7 +20,6 @@ type LimiterParams = Vec<LimiterParamsEnum>;
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Limiter {
-    // Extendes builtInDevice
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,

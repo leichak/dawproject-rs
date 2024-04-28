@@ -9,7 +9,6 @@ use super::time_unit::TimeUnit;
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Video {
-    // Extends media file
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,
@@ -34,7 +33,6 @@ pub struct Video {
     #[serde(rename = "@duration")]
     #[serde(skip_serializing_if = "Option::is_none")]
     duration: Option<f64>,
-    // End of extension
     #[serde(rename = "@algorithm")]
     #[serde(skip_serializing_if = "Option::is_none")]
     algorithm: Option<String>,

@@ -46,14 +46,12 @@ pub enum ChannelParameters {
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Devices {
-    // this is weird
     #[serde(rename = "$value")]
     pub choice: Vec<DeviceTypes>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Channel {
-    // Extends lane
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,

@@ -15,7 +15,6 @@ type Content = Vec<ContentType>;
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Track {
-    // Extends lane
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,
