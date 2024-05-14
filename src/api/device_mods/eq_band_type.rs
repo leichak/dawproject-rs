@@ -16,7 +16,7 @@ pub enum EqBandTypeEnum {
     LowShelf,
     #[serde(rename = "bell")]
     Bell,
-    #[serde(rename = "@notch")]
+    #[serde(rename = "notch")]
     Notch,
 }
 
