@@ -925,4 +925,12 @@ mod project_creator {
         create_midi_automation_example("MIDI-PitchBend-AutomationInClips".to_string(), true, true)?;
         Ok(())
     }
+
+    #[test]
+    pub fn load_save_load_comparision_test() -> Result<(), Box<dyn Error>> {
+        /*
+        This test should load project exported with original dawproject in java, save and load again to compare results.
+         */
+        Ok(())
+    }
 }
