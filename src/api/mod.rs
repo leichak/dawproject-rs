@@ -935,9 +935,16 @@ mod project_creator {
          */
         use {super::project::Project, quick_xml::de::from_str};
 
-        let obj: Project = from_str(XML).unwrap();
+        let obj1: Project = from_str(XML).unwrap();
 
-        println!("Deserialized object {:#?}", obj);
+        println!("Deserialized object {:#?}", obj1);
+
+        // le obj1_ser = serialiaze
+
+        // let obj2 = deserialize
+
+        // compare obj1 and obj2
+
         Ok(())
     }
 }
