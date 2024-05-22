@@ -930,16 +930,22 @@ mod project_creator {
 
     #[test]
     pub fn load_save_load_comparision_test() -> Result<(), Box<dyn Error>> {
-        /*
-        This test should load project exported with original dawproject in java, save and load again to compare results.
-         */
+        /// This test should load project exported with original dawproject in java,
+        /// save and load again to compare results.
         use {super::project::Project, quick_xml::de::from_str};
 
         let obj1: Project = from_str(XML).unwrap();
 
         println!("Deserialized object {:#?}", obj1);
 
-        // le obj1_ser = serialiaze
+        let file = Path::new("tests/conform_test.dawproject.zip");
+
+        let obj1_ser = DawProject::save(
+            obj1,
+            MetaData::new_fake(),
+            std::collections::HashMap::new(),
+            file,
+        )?;
 
         // let obj2 = deserialize
 
