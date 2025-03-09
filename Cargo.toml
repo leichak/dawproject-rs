@@ -13,18 +13,13 @@ license-file = "LICENSE"
 
 [dependencies]
 xml = "0.8.10"
-quick-xml = {version = "0.31.0", features = ["serialize"]}
-serde = {version = "1.0.192"   ,  features = ["derive"] }
-uuid = { version = "1.6.1", features = [
-    "v4",                
-    "fast-rng",          
-    "macro-diagnostics", 
-]}
+quick-xml = { version = "0.31.0", features = ["serialize"] }
+serde = { version = "1.0.192", features = ["derive"] }
+uuid = { version = "1.6.1", features = ["v4", "fast-rng", "macro-diagnostics"] }
 zip = "0.6.6"
 strum = { version = "0.26", features = ["derive"] }
-fake = { version = "2.9.2", features = ["derive", "always-true-rng"] }
+fake = { version = "4.0", features = ["derive", "always-true-rng"] }
 dotenv = "0.15.0"
 cargo-limit = "0.0.10"
 once_cell = "1.19.0"
 rand = "0.9.0"
-
