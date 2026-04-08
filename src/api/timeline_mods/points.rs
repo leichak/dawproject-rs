@@ -12,19 +12,14 @@ use {
     serde::{Deserialize, Serialize},
 };
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
-pub enum PointsTypeEnum {
+pub enum PointsSequenceEnum {
+    Target(AutomationTarget),
     Point(Point),
     RealPoint(RealPoint),
     EnumPoint(EnumPoint),
     BoolPoint(BoolPoint),
     IntegerPoint(IntegerPoint),
     TimeSignaturePoint(TimeSignaturePoint),
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
-pub enum PointsSequenceEnum {
-    Target(AutomationTarget),
-    PointType(PointsTypeEnum),
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
