@@ -5,15 +5,6 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
-enum TimeSignaturePointEnum {
-    #[serde(rename = "@numerator")]
-    Numerator(i32),
-    #[serde(rename = "@denominator")]
-    Denominator(i32),
-}
-
-type TimeSignaturePointSequence = Vec<TimeSignaturePointEnum>;
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct TimeSignaturePoint {
@@ -21,15 +12,21 @@ pub struct TimeSignaturePoint {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time: Option<String>,
 
-    #[serde(rename = "$value", default)]
-    real_point_sequence: Option<TimeSignaturePointSequence>,
+    #[serde(rename = "@numerator")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub numerator: Option<i32>,
+
+    #[serde(rename = "@denominator")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub denominator: Option<i32>,
 }
 
 impl TimeSignaturePoint {
     pub fn new_test() -> Self {
         Self {
             time: None,
-            real_point_sequence: None,
+            numerator: None,
+            denominator: None,
         }
     }
 
