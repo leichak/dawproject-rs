@@ -1,34 +1,24 @@
 
-# dawproject-rs 
+# dawproject-rs
 
 Open exchange format for user data between Digital Audio Workstations (DAWs), ported to Rust.
 
-The intention of this project is to be based on the DawProject format and provide compatibility, as well as serve as a foundation for extending its version, all while preserving compatibility with previous versions.
+Based on the [DawProject](https://github.com/bitwig/dawproject) format by Bitwig, this library aims to provide full compatibility while serving as a foundation for future extensions.
 
 ## Overview
 
-This work is based on bitwig DawProject which is available:
-https://github.com/bitwig/dawproject/tree/main
+All structures and functions are available through the `api` module. A simple example is provided in the `examples` module.
 
-## Getting Started
-
-To get started with dawproject-rs you can use all structures and functions available in the api-module.
-
-To run all tests create "tests" folder in the main folder.
-
-Original repository with commit tree leading to the first version is private. This ensures clarity in the commit tree to be able to built on top. 
-
-Simple example is available in mod examples. Current version has couple rough spots that will be resolved soon, for example improving API. 
+To run tests, create a `tests` folder in the project root.
 
 ## Contributing
 
-We welcome contributions from the community! 
+Contributions are welcome!
 
-Todo:
+### Todo
 
-- clean-up naming
-- ensure full-compatibility with original DawProject repository when saving / loading by comparing XML content.
-- provide helper functions for all structs useful when creating
+- Ensure full compatibility with the original DawProject repository (XML round-trip validation)
+- Provide helper functions for common struct creation patterns
 
 ## License
 
