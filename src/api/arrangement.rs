@@ -15,6 +15,7 @@ pub enum ArrangementSequenceEnum {
     Lanes(Lanes),
     Markers(Markers),
     TempoAutomation(Points),
+    TimeSignatureAutomation(Points),
 }
 
 type ArrangementSequence = Vec<ArrangementSequenceEnum>;
