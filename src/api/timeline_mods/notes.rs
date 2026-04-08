@@ -8,6 +8,11 @@ use {
 use super::{note::Note, time_unit::TimeUnit};
 
 #[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+pub enum NoteEnum {
+    Note(Note),
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
 pub struct Notes {
     // Extends timeline
     #[serde(rename = "@id")]
@@ -31,7 +36,7 @@ pub struct Notes {
 
     #[serde(rename = "$value", default)]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub notes_sequence: Option<Vec<Note>>,
+    pub notes_sequence: Option<Vec<NoteEnum>>,
 }
 
 impl Notes {

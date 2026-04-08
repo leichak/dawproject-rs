@@ -121,7 +121,7 @@ mod project_creator {
     };
 
     use super::timeline_mods::{
-        points::{Points, PointsSequenceEnum, PointsTypeEnum},
+        points::{Points, PointsSequenceEnum},
         real_point::RealPoint,
         time_unit::TimeUnit,
     };
@@ -393,7 +393,7 @@ mod project_creator {
                     note.rel = Some(0.5);
                     note.time = Some(0.5 * (j as f64));
                     note.duration = Some(0.5);
-                    notes.notes_sequence.as_mut().unwrap().push(note);
+                    notes.notes_sequence.as_mut().unwrap().push(super::timeline_mods::notes::NoteEnum::Note(note));
                 }
 
                 if i == 0 && features.contains(&Features::Automation) {
@@ -433,12 +433,12 @@ mod project_creator {
                     if points.points.is_none() {
                         points.points = Some(vec![]);
                     }
-                    let point = PointsSequenceEnum::PointType(PointsTypeEnum::RealPoint(
+                    let point = PointsSequenceEnum::RealPoint(
                         create_point(0.0, 0.0, InterpolationEnum::Linear),
-                    ));
-                    let point_1 = PointsSequenceEnum::PointType(PointsTypeEnum::RealPoint(
+                    );
+                    let point_1 = PointsSequenceEnum::RealPoint(
                         create_point(8.0, 1.0, InterpolationEnum::Linear),
-                    ));
+                    );
 
                     points
                         .points
@@ -839,9 +839,9 @@ mod project_creator {
                 .points
                 .as_mut()
                 .unwrap()
-                .push(PointsSequenceEnum::PointType(PointsTypeEnum::RealPoint(
+                .push(PointsSequenceEnum::RealPoint(
                     create_point(a, b, c),
-                )));
+                ));
         }
 
         if in_clips {
