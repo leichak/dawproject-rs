@@ -59,6 +59,9 @@ pub struct Clip {
     #[serde(rename = "@reference")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reference: Option<String>,
+    #[serde(rename = "@enable")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub enable: Option<bool>,
 }
 
 impl Clip {
@@ -79,6 +82,7 @@ impl Clip {
             fade_in_time: None,
             fade_out_time: None,
             reference: None,
+            enable: None,
         }
     }
 
