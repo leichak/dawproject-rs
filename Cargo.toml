@@ -17,7 +17,7 @@ quick-xml = { version = "0.31.0", features = ["serialize"] }
 serde = { version = "1.0.228", features = ["derive"] }
 uuid = { version = "1.23.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
 zip = "0.6.6"
-strum = { version = "0.26", features = ["derive"] }
+strum = { version = "0.28", features = ["derive"] }
 fake = { version = "4.0", features = ["derive", "always-true-rng"] }
 dotenv = "0.15.0"
 cargo-limit = "0.0.10"
