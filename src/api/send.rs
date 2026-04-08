@@ -2,7 +2,8 @@
 
 use {
     super::{
-        add_one_get, fake_rng, real_parameter::RealParameter, send_type::SendTypeEnum, unit::Unit,
+        add_one_get, bool_parameter::BoolParameter, fake_rng, real_parameter::RealParameter,
+        send_type::SendTypeEnum, unit::Unit,
     },
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
@@ -12,6 +13,15 @@ pub struct Send {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,
+    #[serde(rename = "@name")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    name: Option<String>,
+    #[serde(rename = "@color")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    color: Option<String>,
+    #[serde(rename = "@comment")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    comment: Option<String>,
     #[serde(rename = "Volume")]
     volume: RealParameter,
     #[serde(rename = "Pan")]
@@ -22,16 +32,23 @@ pub struct Send {
     destination: Option<String>,
     #[serde(rename = "@type")]
     send_type: SendTypeEnum,
+    #[serde(rename = "Enable")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    enable: Option<BoolParameter>,
 }
 
 impl Send {
     pub fn new_test() -> Self {
         Self {
             id: Some(format!("id{}", add_one_get())),
+            name: None,
+            color: None,
+            comment: None,
             volume: RealParameter::new_test(Unit::Beats),
             pan: None,
             destination: None,
             send_type: SendTypeEnum::new_fake(),
+            enable: None,
         }
     }
 
