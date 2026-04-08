@@ -12,6 +12,15 @@ pub struct AuPlugin {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none", default)]
     id: Option<String>,
+    #[serde(rename = "@name")]
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    name: Option<String>,
+    #[serde(rename = "@color")]
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    color: Option<String>,
+    #[serde(rename = "@comment")]
+    #[serde(skip_serializing_if = "Option::is_none", default)]
+    comment: Option<String>,
     #[serde(rename = "$value", default)]
     device_elements: DeviceElements,
     #[serde(rename = "@deviceID")]
@@ -38,6 +47,9 @@ impl AuPlugin {
     pub fn new_test() -> Self {
         Self {
             id: Some(format!("id{}", add_one_get())),
+            name: None,
+            color: None,
+            comment: None,
             device_elements: vec![],
             device_id: None,
             device_name: None,

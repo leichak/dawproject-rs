@@ -41,6 +41,15 @@ pub struct Device {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]
     id: Option<String>,
+    #[serde(rename = "@name")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    name: Option<String>,
+    #[serde(rename = "@color")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    color: Option<String>,
+    #[serde(rename = "@comment")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    comment: Option<String>,
     #[serde(rename = "@deviceID")]
     #[serde(skip_serializing_if = "Option::is_none")]
     device_id: Option<String>,
@@ -64,6 +73,9 @@ impl Device {
     pub fn new_test() -> Self {
         Self {
             id: Some(format!("id{}", add_one_get())),
+            name: None,
+            color: None,
+            comment: None,
             device_elements: vec![],
             device_id: None,
             device_name: None,
