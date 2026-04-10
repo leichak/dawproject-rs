@@ -1,12 +1,11 @@
 #![allow(unused)]
 
 use {
-    super::{meta_data::MetaData, project::Project},
+    super::{error::DawProjectError, meta_data::MetaData, project::Project},
     quick_xml::{de::from_str, se::to_string},
     std::{
         any::type_name,
         collections::HashMap,
-        error::Error,
         fs,
         io::{Read, Write},
         path::Path,
@@ -32,28 +31,10 @@ impl DawProject {
         DawProject {}
     }
 
-    fn export_schema() -> Result<String, Box<dyn Error>> {
-        /*
-        This probably be able to export xml schema.xsd, but it is unnecessary since we will always derive it
-        from its parent project in Java. // or not?
-         */
-        Ok(String::new())
-    }
-
-    fn to_xml(object: ObjectType) -> Result<String, Box<dyn Error>> {
-        /*
-        Function that takes object and returns String from that object that represents XML
-         */
-
+    fn to_xml(object: ObjectType) -> Result<String, DawProjectError> {
         match object {
-            ObjectType::P(o) => match to_string(&o) {
-                Ok(o_string) => Ok(o_string),
-                Err(err) => Err(err.into()),
-            },
-            ObjectType::M(o) => match to_string(&o) {
-                Ok(o_string) => Ok(o_string),
-                Err(err) => Err(err.into()),
-            },
+            ObjectType::P(o) => Ok(to_string(&o)?),
+            ObjectType::M(o) => Ok(to_string(&o)?),
         }
     }
 
@@ -61,51 +42,21 @@ impl DawProject {
         type_name::<T>()
     }
 
-    fn project_from_xml(xml_string: String) -> Result<Project, Box<dyn Error>> {
-        match from_str(&xml_string) {
-            Ok(project) => Ok(project),
-            Err(err) => Err(err.into()),
-        }
+    fn project_from_xml(xml_string: String) -> Result<Project, DawProjectError> {
+        Ok(from_str(&xml_string)?)
     }
 
-    fn metadata_from_xml(xml_string: String) -> Result<MetaData, Box<dyn Error>> {
-        match from_str(&xml_string) {
-            Ok(project) => Ok(project),
-            Err(err) => Err(err.into()),
-        }
+    fn metadata_from_xml(xml_string: String) -> Result<MetaData, DawProjectError> {
+        Ok(from_str(&xml_string)?)
     }
 
-    fn create_context() -> Result<(), Box<dyn Error>> {
-        /*
-        This functions is creating some JABCONTEXT, whatever it is, unnecessary I think
-         */
+    fn save_xml(project: Project, path: &Path) -> Result<(), DawProjectError> {
+        let project_xml = Self::to_xml(ObjectType::P(project))?;
+        fs::write(path, project_xml)?;
         Ok(())
     }
 
-    fn save_xml(project: Project, path: &Path) -> Result<(), Box<dyn Error>> {
-        let mut project_xml: String = String::new();
-
-        match DawProject::to_xml(ObjectType::P(project)) {
-            Ok(x) => {
-                project_xml = x;
-            }
-            Err(err) => return Err(err),
-        };
-
-        match fs::write(path, project_xml) {
-            Ok(_) => Ok(()),
-            Err(err) => Err(err.into()),
-        }
-    }
-
-    fn validate(_project: Project) -> Result<(), Box<dyn Error>> {
-        /*
-        This `validate` function takes a `Project` object, converts it to XML using `toXML`,
-        then validates the XML against an XML schema for `Project` objects, throwing an `IOException`
-        if validation fails due to a JAXB or SAX exception.
-
-        So it is safeguard
-        */
+    fn validate(_project: Project) -> Result<(), DawProjectError> {
         Ok(())
     }
 
@@ -114,47 +65,24 @@ impl DawProject {
         meta_data: MetaData,
         embedded_files: HashMap<&Path, String>,
         zip_file_path: &Path,
-    ) -> Result<(), Box<dyn Error>> {
-        let file = match std::fs::File::create(zip_file_path) {
-            Ok(f) => f,
-            Err(err) => return Err(err.into()),
-        };
-
+    ) -> Result<(), DawProjectError> {
+        let file = std::fs::File::create(zip_file_path)?;
         let mut zip_writer = zip::ZipWriter::new(file);
 
-        let project_xml = match Self::to_xml(ObjectType::P(project)) {
-            Ok(s) => s,
-            Err(err) => return Err(err),
-        };
+        let project_xml = Self::to_xml(ObjectType::P(project))?;
+        let meta_data_xml = Self::to_xml(ObjectType::M(meta_data))?;
 
-        let meta_data_xml = match Self::to_xml(ObjectType::M(meta_data)) {
-            Ok(s) => s,
-            Err(err) => return Err(err),
-        };
-
-        match Self::add_file_to_zip_from_str(&mut zip_writer, &project_xml, PROJECT_FILE) {
-            Ok(()) => (),
-            Err(err) => return Err(err),
-        }
-
-        match Self::add_file_to_zip_from_str(&mut zip_writer, &meta_data_xml, METADATA_FILE) {
-            Ok(()) => (),
-            Err(err) => return Err(err),
-        }
+        Self::add_file_to_zip_from_str(&mut zip_writer, &project_xml, PROJECT_FILE)?;
+        Self::add_file_to_zip_from_str(&mut zip_writer, &meta_data_xml, METADATA_FILE)?;
 
         for (p, s) in &embedded_files {
-            let file_name_with_path = p.to_str().unwrap();
-            match Self::add_file_to_zip_from_str(&mut zip_writer, s, file_name_with_path) {
-                Ok(()) => (),
-                Err(err) => return Err(err),
-            }
+            let file_name_with_path = p
+                .to_str()
+                .ok_or_else(|| DawProjectError::InvalidPath(format!("{:?}", p)))?;
+            Self::add_file_to_zip_from_str(&mut zip_writer, s, file_name_with_path)?;
         }
 
-        match zip_writer.finish() {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
+        zip_writer.finish()?;
         Ok(())
     }
 
@@ -162,19 +90,10 @@ impl DawProject {
         zip_writer: &mut ZipWriter<W>,
         content: &[u8],
         file_name: &str,
-    ) -> Result<(), Box<dyn Error>> {
+    ) -> Result<(), DawProjectError> {
         let name = format!("./{}", file_name);
-
-        match zip_writer.start_file(name, zip::write::SimpleFileOptions::default()) {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
-        match zip_writer.write_all(content) {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
+        zip_writer.start_file(name, zip::write::SimpleFileOptions::default())?;
+        zip_writer.write_all(content)?;
         Ok(())
     }
 
@@ -182,39 +101,19 @@ impl DawProject {
         zip_writer: &mut ZipWriter<W>,
         content: &str,
         file_name: &str,
-    ) -> Result<(), Box<dyn Error>> {
-        let name = file_name.to_string();
-
+    ) -> Result<(), DawProjectError> {
         let options = zip::write::SimpleFileOptions::default()
             .compression_method(zip::CompressionMethod::Stored)
             .unix_permissions(0o755);
 
-        match zip_writer.start_file(file_name, options) {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
-        match zip_writer.write_all(content.as_bytes()) {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
+        zip_writer.start_file(file_name, options)?;
+        zip_writer.write_all(content.as_bytes())?;
         Ok(())
     }
 
-    pub fn strip_bom() {
-        /*
-        This stripBom function takes an InputStream, detects and removes any Byte Order Marks (BOMs) present in the stream,
-        then returns an InputStreamReader using the appropriate Charset,
-        defaulting to UTF-8 if no BOM is found or if the BOM is not recognized as UTF-8,
-        UTF-16LE, or UTF-16BE. If the BOM is not recognized, it throws an IOException with the message
-        "The charset is not supported."
-        */
-    }
-
-    pub fn load(fname: &Path) -> Result<(Project, MetaData), Box<dyn Error>> {
-        let zip_file = std::fs::File::open(fname).unwrap();
-        let mut archive = zip::ZipArchive::new(zip_file).unwrap();
+    pub fn load(fname: &Path) -> Result<(Project, MetaData), DawProjectError> {
+        let zip_file = std::fs::File::open(fname)?;
+        let mut archive = zip::ZipArchive::new(zip_file)?;
 
         let mut p = String::new();
         let mut m = String::new();
@@ -236,50 +135,32 @@ impl DawProject {
             }
         }
 
-        let project: Project = match from_str(&p) {
-            Ok(p) => p,
-            Err(err) => return Err(err.into()),
-        };
-
-        let metadata: MetaData = match from_str(&m) {
-            Ok(m) => m,
-            Err(err) => return Err(err.into()),
-        };
+        let project: Project = from_str(&p)?;
+        let metadata: MetaData = from_str(&m)?;
 
         Ok((project, metadata))
     }
 
-    fn load_metadata(fname: &Path) -> Result<MetaData, Box<dyn Error>> {
-        let zip_file = std::fs::File::open(fname).unwrap();
-        let mut archive = zip::ZipArchive::new(zip_file).unwrap();
+    fn load_metadata(fname: &Path) -> Result<MetaData, DawProjectError> {
+        let zip_file = std::fs::File::open(fname)?;
+        let mut archive = zip::ZipArchive::new(zip_file)?;
 
         let mut contents = String::new();
 
         for i in 0..archive.len() {
-            let mut file = archive.by_index(i).unwrap();
+            let mut file = archive.by_index(i)?;
             let _out_path = match file.enclosed_name() {
                 Some(path) => path.to_owned(),
                 None => continue,
             };
 
             if file.name() == METADATA_FILE {
-                match file.read_to_string(&mut contents) {
-                    Ok(_v) => (),
-                    Err(err) => return Err(err.into()),
-                };
+                file.read_to_string(&mut contents)?;
             }
         }
 
-        let metadata: MetaData = match from_str(&contents) {
-            Ok(p) => p,
-            Err(err) => return Err(err.into()),
-        };
-
+        let metadata: MetaData = from_str(&contents)?;
         Ok(metadata)
-    }
-
-    fn stream_embedded(_file: &Path, _embedded_path: String) -> Result<(), Box<dyn Error>> {
-        todo!("Implement");
     }
 }
 
@@ -293,43 +174,31 @@ mod tests {
     #[test]
     fn create_zip_with_text_and_load_test() -> Result<(), Box<dyn Error>> {
         let zip_file_path = "./tests/test.zip";
-        let file = match std::fs::File::create(zip_file_path) {
-            Ok(f) => f,
-            Err(err) => return Err(err.into()),
-        };
+        let file = std::fs::File::create(zip_file_path)?;
 
         let mut zip_writer = zip::ZipWriter::new(file);
 
         let contents = String::from_str("This is just the test").unwrap();
         let filename = "./tests/test.dawproject";
 
-        match DawProject::add_file_to_zip_from_str(&mut zip_writer, &contents, filename) {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
+        DawProject::add_file_to_zip_from_str(&mut zip_writer, &contents, filename)?;
+        zip_writer.finish()?;
 
-        match zip_writer.finish() {
-            Ok(_) => (),
-            Err(err) => return Err(err.into()),
-        }
-
-        let zip_file = std::fs::File::open(zip_file_path).unwrap();
-        let mut archive = zip::ZipArchive::new(zip_file).unwrap();
+        let zip_file = std::fs::File::open(zip_file_path)?;
+        let mut archive = zip::ZipArchive::new(zip_file)?;
 
         let mut contents_read = String::new();
 
         for i in 0..archive.len() {
-            let mut file = archive.by_index(i).unwrap();
+            let mut file = archive.by_index(i)?;
             let _out_path = match file.enclosed_name() {
                 Some(path) => path.to_owned(),
                 None => continue,
             };
 
             if file.name().contains(filename) {
-                match file.read_to_string(&mut contents_read) {
-                    Ok(_) => println!("File {}", file.name()),
-                    Err(err) => return Err(err.into()),
-                };
+                file.read_to_string(&mut contents_read)?;
+                println!("File {}", file.name());
             }
         }
 
