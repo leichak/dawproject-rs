@@ -12,7 +12,7 @@ use {
         path::Path,
         str,
     },
-    zip::{write::FileOptions, ZipWriter},
+    zip::ZipWriter,
 };
 
 const FORMAT_NAME: &str = "DAWProject exchange format";
@@ -165,7 +165,7 @@ impl DawProject {
     ) -> Result<(), Box<dyn Error>> {
         let name = format!("./{}", file_name);
 
-        match zip_writer.start_file(name, Default::default()) {
+        match zip_writer.start_file(name, zip::write::SimpleFileOptions::default()) {
             Ok(_) => (),
             Err(err) => return Err(err.into()),
         }
@@ -185,7 +185,7 @@ impl DawProject {
     ) -> Result<(), Box<dyn Error>> {
         let name = file_name.to_string();
 
-        let options = FileOptions::default()
+        let options = zip::write::SimpleFileOptions::default()
             .compression_method(zip::CompressionMethod::Stored)
             .unix_permissions(0o755);
 

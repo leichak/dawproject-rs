@@ -16,7 +16,7 @@ xml = "0.8.10"
 quick-xml = { version = "0.39.0", features = ["serialize"] }
 serde = { version = "1.0.228", features = ["derive"] }
 uuid = { version = "1.23.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
-zip = "0.6.6"
+zip = "2.4"
 strum = { version = "0.28", features = ["derive"] }
 fake = { version = "4.0", features = ["derive", "always-true-rng"] }
 dotenv = "0.15.0"
