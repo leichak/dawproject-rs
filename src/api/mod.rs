@@ -6,6 +6,7 @@ mod bool_parameter;
 mod channel;
 mod content_type;
 mod daw_project;
+pub mod error;
 mod device_mods;
 mod enum_parameter;
 mod expression_type;
@@ -28,6 +29,7 @@ mod transport;
 mod unit;
 mod utility;
 
+pub use crate::api::error::DawProjectError;
 pub use crate::api::application::Application;
 pub use crate::api::arrangement::Arrangement;
 pub use crate::api::bool_parameter::BoolParameter;
