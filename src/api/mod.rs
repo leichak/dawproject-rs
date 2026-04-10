@@ -681,7 +681,7 @@ mod project_creator {
             match utility::create_file_path_absolute_string(format!("./{}", sample.clone())) {
                 Ok(p) => path = p,
                 Err(err) => {
-                    return Err(err);
+                    return Err(err.into());
                 }
             }
             audio.files_sequence.as_mut().unwrap().push(FileReference {

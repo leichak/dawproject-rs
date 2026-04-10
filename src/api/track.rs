@@ -75,7 +75,7 @@ impl Track {
     }
 
     pub fn get_id(&self) -> String {
-        self.id.clone().unwrap()
+        self.id.clone().expect("Track ID was not set")
     }
 }
 
