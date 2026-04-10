@@ -10,15 +10,16 @@ pub struct IntegerPoint {
     #[serde(rename = "@time")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub time: Option<String>,
-    #[serde(rename = "$value", default)]
-    integer_point_sequence: Option<Vec<i32>>,
+    #[serde(rename = "@value")]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub value: Option<i32>,
 }
 
 impl IntegerPoint {
     pub fn new_test() -> Self {
         Self {
             time: Some("empty".to_string()),
-            integer_point_sequence: Some(vec![]),
+            value: Some(0),
         }
     }
 
