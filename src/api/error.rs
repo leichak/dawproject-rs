@@ -5,8 +5,10 @@ use std::fmt;
 pub enum DawProjectError {
     /// I/O error (file not found, permission denied, etc.)
     Io(std::io::Error),
-    /// XML serialization or deserialization error
+    /// XML deserialization error
     Xml(quick_xml::DeError),
+    /// XML serialization error
+    XmlSerialization(quick_xml::SeError),
     /// ZIP archive error
     Zip(zip::result::ZipError),
     /// Invalid or non-UTF-8 file path
@@ -19,7 +21,8 @@ impl fmt::Display for DawProjectError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::Io(e) => write!(f, "IO error: {}", e),
-            Self::Xml(e) => write!(f, "XML error: {}", e),
+            Self::Xml(e) => write!(f, "XML deserialization error: {}", e),
+            Self::XmlSerialization(e) => write!(f, "XML serialization error: {}", e),
             Self::Zip(e) => write!(f, "ZIP error: {}", e),
             Self::InvalidPath(p) => write!(f, "Invalid path: {}", p),
             Self::MissingFile(name) => write!(f, "Missing file in archive: {}", name),
@@ -32,6 +35,7 @@ impl std::error::Error for DawProjectError {
         match self {
             Self::Io(e) => Some(e),
             Self::Xml(e) => Some(e),
+            Self::XmlSerialization(e) => Some(e),
             Self::Zip(e) => Some(e),
             _ => None,
         }
@@ -47,6 +51,12 @@ impl From<std::io::Error> for DawProjectError {
 impl From<quick_xml::DeError> for DawProjectError {
     fn from(e: quick_xml::DeError) -> Self {
         Self::Xml(e)
+    }
+}
+
+impl From<quick_xml::SeError> for DawProjectError {
+    fn from(e: quick_xml::SeError) -> Self {
+        Self::XmlSerialization(e)
     }
 }
 
