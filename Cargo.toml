@@ -13,7 +13,7 @@ license-file = "LICENSE"
 
 [dependencies]
 xml = "0.8.10"
-quick-xml = { version = "0.31.0", features = ["serialize"] }
+quick-xml = { version = "0.39.0", features = ["serialize"] }
 serde = { version = "1.0.228", features = ["derive"] }
 uuid = { version = "1.23.0", features = ["v4", "fast-rng", "macro-diagnostics"] }
 zip = "0.6.6"
