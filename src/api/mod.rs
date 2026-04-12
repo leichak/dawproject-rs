@@ -1,3 +1,5 @@
+//! Core API types for the DAWproject exchange format.
+
 #![allow(unused)]
 
 mod application;

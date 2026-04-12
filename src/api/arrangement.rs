@@ -20,6 +20,7 @@ pub enum ArrangementSequenceEnum {
 
 type ArrangementSequence = Vec<ArrangementSequenceEnum>;
 
+/// The linear timeline arrangement containing lanes, markers, and tempo/time-signature automation.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Arrangement {
     #[serde(rename = "@id")]

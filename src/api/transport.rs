@@ -16,6 +16,7 @@ pub enum TransportSequence {
 
 type TransportSequenceVec = Vec<TransportSequence>;
 
+/// Transport settings including tempo and time signature parameters.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Transport {
     #[serde(rename = "$value", default)]

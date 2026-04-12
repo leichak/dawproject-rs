@@ -22,6 +22,7 @@ pub enum PointsSequenceEnum {
     TimeSignaturePoint(TimeSignaturePoint),
 }
 
+/// A collection of automation points (real, bool, enum, integer, or time signature).
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Points {
     // Extends timeline

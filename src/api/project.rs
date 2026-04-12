@@ -20,12 +20,14 @@ pub enum TrackChannelEnum {
     Channel(Channel),
 }
 
+/// Top-level structure containing tracks and channels.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Structure {
     #[serde(rename = "$value", default)]
     pub sequence: Vec<TrackChannelEnum>,
 }
 
+/// Root element of a DAWproject file containing structure, arrangement, transport, and scenes.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Project {
     #[serde(rename = "@version")]
@@ -101,6 +103,61 @@ impl Project {
             return Some(t);
         }
         None
+    }
+}
+
+pub struct ProjectBuilder {
+    version: String,
+    application: Application,
+    transport: Option<Transport>,
+    structure: Option<Structure>,
+    arrangement: Option<Arrangement>,
+    scenes: Option<Vec<Scene>>,
+}
+
+impl ProjectBuilder {
+    pub fn transport(mut self, transport: Transport) -> Self {
+        self.transport = Some(transport);
+        self
+    }
+
+    pub fn structure(mut self, structure: Structure) -> Self {
+        self.structure = Some(structure);
+        self
+    }
+
+    pub fn arrangement(mut self, arrangement: Arrangement) -> Self {
+        self.arrangement = Some(arrangement);
+        self
+    }
+
+    pub fn scenes(mut self, scenes: Vec<Scene>) -> Self {
+        self.scenes = Some(scenes);
+        self
+    }
+
+    pub fn build(self) -> Project {
+        Project {
+            version: self.version,
+            application: self.application,
+            transport: self.transport,
+            structure: self.structure,
+            arrangement: self.arrangement,
+            scenes: self.scenes,
+        }
+    }
+}
+
+impl Project {
+    pub fn builder(version: &str, application: Application) -> ProjectBuilder {
+        ProjectBuilder {
+            version: version.to_string(),
+            application,
+            transport: None,
+            structure: None,
+            arrangement: None,
+            scenes: None,
+        }
     }
 }
 

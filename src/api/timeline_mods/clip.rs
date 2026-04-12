@@ -13,6 +13,7 @@ pub enum TimeLineEnum {
     TimeLine(TimeLine),
 }
 
+/// A time-positioned region of content (notes, audio, automation) within an arrangement.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Clip {
     #[serde(rename = "@name")]
@@ -89,6 +90,107 @@ impl Clip {
     pub fn new_fake() -> Self {
         let o: Self = Faker.fake_with_rng(&mut fake_rng());
         o
+    }
+}
+
+pub struct ClipBuilder {
+    time: f64,
+    duration: Option<f64>,
+    name: Option<String>,
+    color: Option<String>,
+    content_time_unit: Option<TimeUnit>,
+    play_start: Option<f64>,
+    play_stop: Option<f64>,
+    loop_start: Option<f64>,
+    loop_end: Option<f64>,
+    reference: Option<String>,
+    enable: Option<bool>,
+}
+
+impl ClipBuilder {
+    pub fn duration(mut self, duration: f64) -> Self {
+        self.duration = Some(duration);
+        self
+    }
+
+    pub fn name(mut self, name: &str) -> Self {
+        self.name = Some(name.to_string());
+        self
+    }
+
+    pub fn color(mut self, color: &str) -> Self {
+        self.color = Some(color.to_string());
+        self
+    }
+
+    pub fn content_time_unit(mut self, unit: TimeUnit) -> Self {
+        self.content_time_unit = Some(unit);
+        self
+    }
+
+    pub fn play_start(mut self, play_start: f64) -> Self {
+        self.play_start = Some(play_start);
+        self
+    }
+
+    pub fn play_stop(mut self, play_stop: f64) -> Self {
+        self.play_stop = Some(play_stop);
+        self
+    }
+
+    pub fn loop_range(mut self, start: f64, end: f64) -> Self {
+        self.loop_start = Some(start);
+        self.loop_end = Some(end);
+        self
+    }
+
+    pub fn reference(mut self, reference: &str) -> Self {
+        self.reference = Some(reference.to_string());
+        self
+    }
+
+    pub fn enable(mut self, enable: bool) -> Self {
+        self.enable = Some(enable);
+        self
+    }
+
+    pub fn build(self) -> Clip {
+        Clip {
+            name: self.name,
+            color: self.color,
+            comment: None,
+            notes_sequence_choice: None,
+            time: self.time,
+            duration: self.duration,
+            content_time_unit: self.content_time_unit,
+            play_start: self.play_start,
+            play_stop: self.play_stop,
+            loop_start: self.loop_start,
+            loop_end: self.loop_end,
+            fade_time_unit: None,
+            fade_in_time: None,
+            fade_out_time: None,
+            reference: self.reference,
+            enable: self.enable,
+        }
+    }
+}
+
+impl Clip {
+    pub fn builder(time: f64) -> ClipBuilder {
+        ClipBuilder {
+            time,
+            duration: None,
+            name: None,
+            color: None,
+            content_time_unit: None,
+            play_start: None,
+            play_stop: None,
+            loop_start: None,
+            loop_end: None,
+            reference: None,
+            enable: None,
+        }
     }
 }
 
