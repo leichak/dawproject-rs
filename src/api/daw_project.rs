@@ -23,7 +23,7 @@ const METADATA_FILE: &str = "metadata.xml";
 pub struct DawProject {}
 
 pub enum ObjectType {
-    P(Project),
+    P(Box<Project>),
     M(MetaData),
 }
 
@@ -52,7 +52,7 @@ impl DawProject {
     }
 
     fn save_xml(project: Project, path: &Path) -> Result<(), DawProjectError> {
-        let project_xml = Self::to_xml(ObjectType::P(project))?;
+        let project_xml = Self::to_xml(ObjectType::P(Box::new(project)))?;
         fs::write(path, project_xml)?;
         Ok(())
     }
@@ -70,7 +70,7 @@ impl DawProject {
         let file = std::fs::File::create(zip_file_path)?;
         let mut zip_writer = zip::ZipWriter::new(file);
 
-        let project_xml = Self::to_xml(ObjectType::P(project))?;
+        let project_xml = Self::to_xml(ObjectType::P(Box::new(project)))?;
         let meta_data_xml = Self::to_xml(ObjectType::M(meta_data))?;
 
         Self::add_file_to_zip_from_str(&mut zip_writer, &project_xml, PROJECT_FILE)?;

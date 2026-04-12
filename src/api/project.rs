@@ -86,8 +86,8 @@ impl Project {
                         .iter()
                         .filter(|el| match el {
                             TrackChannelEnum::Channel(c) => {
-                                if c.role.is_some() {
-                                    *c.role.as_ref().unwrap() == MixerRoleEnum::Master
+                                if let Some(role) = &c.role {
+                                    *role == MixerRoleEnum::Master
                                 } else {
                                     false
                                 }
