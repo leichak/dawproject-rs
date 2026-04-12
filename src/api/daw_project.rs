@@ -19,6 +19,7 @@ const FILE_EXTENSION: &str = "dawproject";
 const PROJECT_FILE: &str = "project.xml";
 const METADATA_FILE: &str = "metadata.xml";
 
+/// Main entry point for reading and writing `.dawproject` files (ZIP archives).
 pub struct DawProject {}
 
 pub enum ObjectType {

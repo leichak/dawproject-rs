@@ -20,12 +20,14 @@ pub enum TrackChannelEnum {
     Channel(Channel),
 }
 
+/// Top-level structure containing tracks and channels.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Structure {
     #[serde(rename = "$value", default)]
     pub sequence: Vec<TrackChannelEnum>,
 }
 
+/// Root element of a DAWproject file containing structure, arrangement, transport, and scenes.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Project {
     #[serde(rename = "@version")]

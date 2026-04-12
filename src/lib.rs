@@ -1,3 +1,13 @@
+//! # dawproject-rs
+//!
+//! Rust implementation of the [DAWproject](https://github.com/bitwig/dawproject) exchange format
+//! for Digital Audio Workstations.
+//!
+//! A `.dawproject` file is a ZIP archive containing `project.xml` (the project structure)
+//! and `metadata.xml` (song metadata), plus optional embedded audio files.
+//!
+//! All types are available through the [`api`] module.
+
 pub mod api;
 
 #[cfg(test)]

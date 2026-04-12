@@ -13,6 +13,7 @@ pub enum TimeLineEnum {
     TimeLine(TimeLine),
 }
 
+/// A time-positioned region of content (notes, audio, automation) within an arrangement.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Clip {
     #[serde(rename = "@name")]

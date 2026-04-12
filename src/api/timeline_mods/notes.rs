@@ -12,6 +12,7 @@ pub enum NoteEnum {
     Note(Note),
 }
 
+/// A collection of MIDI note events within a timeline.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Notes {
     // Extends timeline

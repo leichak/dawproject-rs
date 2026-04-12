@@ -24,6 +24,7 @@ enum MetaDataEnum {
 
 type MetaDataVec = Vec<MetaDataEnum>;
 
+/// Project metadata (title, artist, album, genre, etc.) stored in `metadata.xml`.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct MetaData {
     #[serde(rename = "$value", default)]

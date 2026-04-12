@@ -13,6 +13,7 @@ pub type TrackChannel = Vec<TrackChannelEnum>;
 
 type Content = Vec<ContentType>;
 
+/// A track in the DAW project, containing channels and content type information.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Track {
     #[serde(rename = "@id")]

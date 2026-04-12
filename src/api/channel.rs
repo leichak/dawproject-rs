@@ -50,6 +50,7 @@ pub struct Devices {
     pub choice: Vec<DeviceTypes>,
 }
 
+/// Audio channel with volume, pan, mute, devices, and routing.
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Channel {
     #[serde(rename = "@id")]
