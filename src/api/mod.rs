@@ -8,9 +8,9 @@ mod bool_parameter;
 mod channel;
 mod content_type;
 mod daw_project;
-pub mod error;
 mod device_mods;
 mod enum_parameter;
+pub mod error;
 mod expression_type;
 mod file_reference;
 mod integer_parameter;
@@ -31,7 +31,6 @@ mod transport;
 mod unit;
 mod utility;
 
-pub use crate::api::error::DawProjectError;
 pub use crate::api::application::Application;
 pub use crate::api::arrangement::Arrangement;
 pub use crate::api::bool_parameter::BoolParameter;
@@ -39,6 +38,7 @@ pub use crate::api::channel::Channel;
 pub use crate::api::content_type::ContentType;
 pub use crate::api::daw_project::DawProject;
 pub use crate::api::enum_parameter::EnumParameter;
+pub use crate::api::error::DawProjectError;
 pub use crate::api::expression_type::ExpressionType;
 pub use crate::api::file_reference::FileReference;
 pub use crate::api::integer_parameter::IntegerParameter;
@@ -397,7 +397,11 @@ mod project_creator {
                     note.rel = Some(0.5);
                     note.time = Some(0.5 * (j as f64));
                     note.duration = Some(0.5);
-                    notes.notes_sequence.as_mut().unwrap().push(super::timeline_mods::notes::NoteEnum::Note(note));
+                    notes
+                        .notes_sequence
+                        .as_mut()
+                        .unwrap()
+                        .push(super::timeline_mods::notes::NoteEnum::Note(note));
                 }
 
                 if i == 0 && features.contains(&Features::Automation) {
@@ -437,12 +441,16 @@ mod project_creator {
                     if points.points.is_none() {
                         points.points = Some(vec![]);
                     }
-                    let point = PointsSequenceEnum::RealPoint(
-                        create_point(0.0, 0.0, InterpolationEnum::Linear),
-                    );
-                    let point_1 = PointsSequenceEnum::RealPoint(
-                        create_point(8.0, 1.0, InterpolationEnum::Linear),
-                    );
+                    let point = PointsSequenceEnum::RealPoint(create_point(
+                        0.0,
+                        0.0,
+                        InterpolationEnum::Linear,
+                    ));
+                    let point_1 = PointsSequenceEnum::RealPoint(create_point(
+                        8.0,
+                        1.0,
+                        InterpolationEnum::Linear,
+                    ));
 
                     points
                         .points
@@ -556,21 +564,17 @@ mod project_creator {
 
     #[test]
     pub fn round_trip_arrangement_xml() -> Result<(), Box<dyn Error>> {
-        let project = create_dummy_project(
-            2,
-            vec![Features::Clips, Features::Notes],
-        );
+        let project = create_dummy_project(2, vec![Features::Clips, Features::Notes]);
         let xml = quick_xml::se::to_string(&project.arrangement)?;
-        let deserialized: Option<super::arrangement::Arrangement> =
-            quick_xml::de::from_str(&xml)?;
+        let deserialized: Option<super::arrangement::Arrangement> = quick_xml::de::from_str(&xml)?;
         assert_eq!(project.arrangement, deserialized);
         Ok(())
     }
 
     #[test]
     pub fn round_trip_transport_xml() -> Result<(), Box<dyn Error>> {
-        use super::transport::{Transport, TransportSequence};
         use super::real_parameter::RealParameter;
+        use super::transport::{Transport, TransportSequence};
 
         let mut transport = Transport::new_fake();
         let mut tempo = RealParameter::new_test(super::unit::Unit::Bpm);
@@ -881,9 +885,7 @@ mod project_creator {
                 .points
                 .as_mut()
                 .unwrap()
-                .push(PointsSequenceEnum::RealPoint(
-                    create_point(a, b, c),
-                ));
+                .push(PointsSequenceEnum::RealPoint(create_point(a, b, c)));
         }
 
         if in_clips {
