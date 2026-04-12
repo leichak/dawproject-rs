@@ -8,7 +8,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum NoiseGateParamsEnum {
     Attack(RealParameter),
     Range(RealParameter),
@@ -19,7 +19,7 @@ enum NoiseGateParamsEnum {
 
 type NoiseGateParams = Vec<NoiseGateParamsEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct NoiseGate {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

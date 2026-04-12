@@ -5,7 +5,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct FileReference {
     #[serde(rename = "@path")]
     pub path: String,

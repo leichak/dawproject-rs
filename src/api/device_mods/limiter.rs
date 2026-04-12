@@ -7,7 +7,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum LimiterParamsEnum {
     Attack(RealParameter),
     InputGain(RealParameter),
@@ -18,7 +18,7 @@ enum LimiterParamsEnum {
 
 type LimiterParams = Vec<LimiterParamsEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Limiter {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

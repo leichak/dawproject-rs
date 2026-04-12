@@ -5,7 +5,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 #[serde(rename = "camelCase")]
 pub enum ExpressionTypeEnum {
     Gain,
@@ -21,7 +21,7 @@ pub enum ExpressionTypeEnum {
     ProgramChange,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct ExpressionType {
     #[serde(rename = "$value", default)]
     pub expression_type: Vec<ExpressionTypeEnum>,

@@ -7,14 +7,14 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum EqParamsEnum {
     Band(EqBand),
     InputGain(RealParameter),
     OutputGain(RealParameter),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Equalizer {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

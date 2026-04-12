@@ -10,7 +10,7 @@ use super::{
     points::Points, time_unit::TimeUnit, timeline::TimeLine, video::Video, warps::Warps,
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum ArrangementTypeChoiceEnum {
     Timeline(TimeLine),
 
@@ -33,7 +33,7 @@ pub enum ArrangementTypeChoiceEnum {
     Points(Points),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct LanesSequence {
     #[serde(rename = "$value", default)]
     pub lanes_sequence: Option<LanesSequenceChoice>,
@@ -54,7 +54,7 @@ impl LanesSequence {
 
 type LanesSequenceChoice = Vec<ArrangementTypeChoiceEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 
 pub struct Lanes {
     #[serde(rename = "@id")]

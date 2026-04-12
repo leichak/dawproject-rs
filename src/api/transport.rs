@@ -8,7 +8,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum TransportSequence {
     Tempo(RealParameter),
     TimeSignature(TimeSignatureParameter),
@@ -16,7 +16,7 @@ pub enum TransportSequence {
 
 type TransportSequenceVec = Vec<TransportSequence>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Transport {
     #[serde(rename = "$value", default)]
     pub sequence: TransportSequenceVec,

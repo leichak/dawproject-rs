@@ -14,19 +14,19 @@ use super::{channel::Channel, track::Track};
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum TrackChannelEnum {
     Track(Track),
     Channel(Channel),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Structure {
     #[serde(rename = "$value", default)]
     pub sequence: Vec<TrackChannelEnum>,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Project {
     #[serde(rename = "@version")]
     pub version: String,

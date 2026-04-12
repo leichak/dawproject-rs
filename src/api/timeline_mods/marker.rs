@@ -5,7 +5,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Marker {
     #[serde(rename = "@name")]
     #[serde(skip_serializing_if = "Option::is_none")]

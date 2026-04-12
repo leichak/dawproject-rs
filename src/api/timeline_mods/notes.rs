@@ -7,12 +7,12 @@ use {
 
 use super::{note::Note, time_unit::TimeUnit};
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum NoteEnum {
     Note(Note),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Notes {
     // Extends timeline
     #[serde(rename = "@id")]

@@ -8,7 +8,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Plugin {
     #[serde(rename = "@id")]
     id: Option<String>,

@@ -7,7 +7,7 @@ use {
 
 use super::unit::Unit;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct RealParameter {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

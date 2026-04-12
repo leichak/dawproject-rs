@@ -9,7 +9,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum CompressorParamsEnum {
     Attack(RealParameter),
     AutoMakeup(BoolParameter),
@@ -22,7 +22,7 @@ enum CompressorParamsEnum {
 
 type CompressorParams = Vec<CompressorParamsEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Compressor {
     #[serde(rename = "@id")]
     id: Option<String>,

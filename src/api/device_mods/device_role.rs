@@ -2,7 +2,7 @@ use {
     fake::Dummy,
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum DeviceRole {
     #[serde(rename = "instrument")]
     Instrument,

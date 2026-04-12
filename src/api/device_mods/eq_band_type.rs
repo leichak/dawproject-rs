@@ -2,7 +2,7 @@ use {
     fake::Dummy,
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum EqBandTypeEnum {
     #[serde(rename = "highPass")]
     HighPass,

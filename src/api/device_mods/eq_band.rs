@@ -4,7 +4,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum EqBandParamsEnum {
     Freq(RealParameter),
     Gain(RealParameter),
@@ -12,7 +12,7 @@ enum EqBandParamsEnum {
     Enabled(BoolParameter),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct EqBand {
     #[serde(rename = "@type")]
     eq_type: EqBandTypeEnum,

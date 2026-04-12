@@ -5,7 +5,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum MetaDataEnum {
     Title(String),
     Artist(String),
@@ -24,7 +24,7 @@ enum MetaDataEnum {
 
 type MetaDataVec = Vec<MetaDataEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct MetaData {
     #[serde(rename = "$value", default)]
     meta_data: MetaDataVec,

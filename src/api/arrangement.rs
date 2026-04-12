@@ -8,7 +8,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum ArrangementSequenceEnum {
     Points(Points),
 
@@ -20,7 +20,7 @@ pub enum ArrangementSequenceEnum {
 
 type ArrangementSequence = Vec<ArrangementSequenceEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Arrangement {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

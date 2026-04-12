@@ -4,7 +4,7 @@ use {
     fake::Dummy,
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 #[serde(rename_all = "lowercase")]
 pub enum ContentType {
     Audio,
