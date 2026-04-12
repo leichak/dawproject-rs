@@ -5,7 +5,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 #[serde(rename_all = "lowercase")]
 pub enum SendTypeEnum {
     Pre,
@@ -19,7 +19,7 @@ impl SendTypeEnum {
     }
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct SendType {
     #[serde(rename = "$value", default)]
     field: Vec<SendTypeEnum>,

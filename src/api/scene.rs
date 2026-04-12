@@ -11,7 +11,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum SceneSequenceEnum {
     Timeline(TimeLine),
     Lanes(Lanes),
@@ -25,7 +25,7 @@ enum SceneSequenceEnum {
     Points(Points),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Scene {
     #[serde(rename = "@id")]
     id: Option<String>,

@@ -5,14 +5,14 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 #[serde(rename_all = "lowercase")]
 enum WarpSequenceEnum {
     Time(f64),
     ContentTime(f64),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Warp {
     #[serde(rename = "@time")]
     time: f64,

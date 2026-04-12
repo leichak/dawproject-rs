@@ -11,7 +11,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum WarpsSequenceEnum {
     Timeline(TimeLine),
     Lanes(Lanes),
@@ -28,7 +28,7 @@ pub enum WarpsSequenceEnum {
 
 type WarpsSequence = Vec<WarpsSequenceEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Warps {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

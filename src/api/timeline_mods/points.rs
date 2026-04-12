@@ -11,7 +11,7 @@ use {
     fake::{Dummy, Fake, Faker},
     serde::{Deserialize, Serialize},
 };
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum PointsSequenceEnum {
     Target(AutomationTarget),
     Point(Point),
@@ -22,7 +22,7 @@ pub enum PointsSequenceEnum {
     TimeSignaturePoint(TimeSignaturePoint),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Points {
     // Extends timeline
     #[serde(rename = "@id")]

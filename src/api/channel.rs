@@ -21,7 +21,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum DeviceTypes {
     Device(Device),
     Vst2Plugin(Vst2Plugin),
@@ -35,7 +35,7 @@ pub enum DeviceTypes {
     AuPlugin(AuPlugin),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum ChannelParameters {
     Volume(Option<RealParameter>),
     Pan(Option<RealParameter>),
@@ -44,13 +44,13 @@ pub enum ChannelParameters {
     Sends(Option<Vec<Send>>),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Devices {
     #[serde(rename = "$value")]
     pub choice: Vec<DeviceTypes>,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Channel {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

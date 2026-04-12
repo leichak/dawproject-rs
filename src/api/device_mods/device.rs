@@ -10,7 +10,7 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum DeviceElementsEnum {
     Parameters,
     Enabled(BoolParameter),
@@ -19,7 +19,7 @@ pub enum DeviceElementsEnum {
 
 pub type DeviceElements = Vec<DeviceElementsEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 enum Parameters {
     #[serde(rename = "parameter")]
     Parameter,
@@ -35,7 +35,7 @@ enum Parameters {
     TimeSignatureParameter,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Device {
     // Extends referenceable
     #[serde(rename = "@id")]

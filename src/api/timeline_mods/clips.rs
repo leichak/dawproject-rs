@@ -10,12 +10,12 @@ use {
 
 use super::time_unit::TimeUnit;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum ClipEnum {
     Clip(Clip),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Clips {
     #[serde(rename = "@id")]
     #[serde(skip_serializing_if = "Option::is_none")]

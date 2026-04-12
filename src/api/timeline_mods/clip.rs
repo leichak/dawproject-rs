@@ -8,12 +8,12 @@ use {
 };
 type ClipSequenceChoice = Vec<ArrangementTypeChoiceEnum>;
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub enum TimeLineEnum {
     TimeLine(TimeLine),
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Clip {
     #[serde(rename = "@name")]
     #[serde(skip_serializing_if = "Option::is_none")]

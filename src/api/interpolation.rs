@@ -6,14 +6,14 @@ use {
     serde::{Deserialize, Serialize},
 };
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 #[serde(rename_all = "lowercase")]
 pub enum InterpolationEnum {
     Hold,
     Linear,
 }
 
-#[derive(Debug, Deserialize, Serialize, Clone, Dummy)]
+#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, Dummy)]
 pub struct Interpolation {
     #[serde(rename = "$value", default)]
     interpolation_type: Vec<InterpolationEnum>,
