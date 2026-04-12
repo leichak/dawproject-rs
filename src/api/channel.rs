@@ -106,6 +106,64 @@ impl Channel {
     }
 }
 
+pub struct ChannelBuilder {
+    role: Option<MixerRoleEnum>,
+    audio_channels: i32,
+    name: Option<String>,
+    color: Option<String>,
+    solo: Option<bool>,
+    destination: Option<String>,
+}
+
+impl ChannelBuilder {
+    pub fn name(mut self, name: &str) -> Self {
+        self.name = Some(name.to_string());
+        self
+    }
+
+    pub fn color(mut self, color: &str) -> Self {
+        self.color = Some(color.to_string());
+        self
+    }
+
+    pub fn solo(mut self, solo: bool) -> Self {
+        self.solo = Some(solo);
+        self
+    }
+
+    pub fn destination(mut self, destination: &str) -> Self {
+        self.destination = Some(destination.to_string());
+        self
+    }
+
+    pub fn build(self) -> Channel {
+        Channel {
+            id: Some(format!("id_{}", add_one_get())),
+            name: self.name,
+            color: self.color,
+            comment: None,
+            role: self.role,
+            audio_channels: self.audio_channels,
+            solo: self.solo,
+            destination: self.destination,
+            elements: None,
+        }
+    }
+}
+
+impl Channel {
+    pub fn builder(role: MixerRoleEnum, audio_channels: i32) -> ChannelBuilder {
+        ChannelBuilder {
+            role: Some(role),
+            audio_channels,
+            name: None,
+            color: None,
+            solo: None,
+            destination: None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::error::Error;

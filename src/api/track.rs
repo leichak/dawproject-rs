@@ -80,6 +80,65 @@ impl Track {
     }
 }
 
+pub struct TrackBuilder {
+    name: Option<String>,
+    color: Option<String>,
+    content_type: Vec<ContentType>,
+    channel: Option<Channel>,
+    loaded: Option<bool>,
+}
+
+impl TrackBuilder {
+    pub fn name(mut self, name: &str) -> Self {
+        self.name = Some(name.to_string());
+        self
+    }
+
+    pub fn color(mut self, color: &str) -> Self {
+        self.color = Some(color.to_string());
+        self
+    }
+
+    pub fn channel(mut self, channel: Channel) -> Self {
+        self.channel = Some(channel);
+        self
+    }
+
+    pub fn loaded(mut self, loaded: bool) -> Self {
+        self.loaded = Some(loaded);
+        self
+    }
+
+    pub fn build(self) -> Track {
+        let mut track_channel = Vec::new();
+        if let Some(ch) = self.channel {
+            track_channel.push(TrackChannelEnum::Channel(ch));
+        }
+
+        Track {
+            id: Some(format!("id_{}", add_one_get())),
+            name: self.name,
+            color: self.color,
+            comment: None,
+            content_type: self.content_type,
+            loaded: self.loaded,
+            track_channel,
+        }
+    }
+}
+
+impl Track {
+    pub fn builder(content_type: Vec<ContentType>) -> TrackBuilder {
+        TrackBuilder {
+            name: None,
+            color: None,
+            content_type,
+            channel: None,
+            loaded: None,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use {super::*, quick_xml::se, std::error::Error};
