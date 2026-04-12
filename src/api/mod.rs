@@ -538,17 +538,55 @@ mod project_creator {
     pub fn save_and_load_daw_project() -> Result<(), Box<dyn Error>> {
         let features = vec![Features::Clips, Features::Notes, Features::Audio];
         let proj = create_dummy_project(3, features);
+        let proj_clone = proj.clone();
         let meta_data = MetaData::new_fake();
         let embedded_files: HashMap<&Path, String> = HashMap::new();
         let file = Path::new("tests/test.dawproject.zip");
 
         DawProject::save(proj, meta_data, embedded_files, file)?;
 
-        let _loaded_project = DawProject::load(file)?;
+        let (loaded_project, _loaded_metadata) = DawProject::load(file)?;
 
-        //TODO
-        //assert_eq!(proj.structure.unwrap(), loaded_project.structure.unwrap());
-        //assert_eq!(proj.scenes.unwrap(), loaded_project.scenes.unwrap());
+        assert_eq!(proj_clone.arrangement, loaded_project.arrangement);
+        assert_eq!(proj_clone.scenes, loaded_project.scenes);
+        Ok(())
+    }
+
+    #[test]
+    pub fn round_trip_arrangement_xml() -> Result<(), Box<dyn Error>> {
+        let project = create_dummy_project(
+            2,
+            vec![Features::Clips, Features::Notes],
+        );
+        let xml = quick_xml::se::to_string(&project.arrangement)?;
+        let deserialized: Option<super::arrangement::Arrangement> =
+            quick_xml::de::from_str(&xml)?;
+        assert_eq!(project.arrangement, deserialized);
+        Ok(())
+    }
+
+    #[test]
+    pub fn round_trip_transport_xml() -> Result<(), Box<dyn Error>> {
+        use super::transport::{Transport, TransportSequence};
+        use super::real_parameter::RealParameter;
+
+        let mut transport = Transport::new_fake();
+        let mut tempo = RealParameter::new_test(super::unit::Unit::Bpm);
+        tempo.value = Some(120.0);
+        transport.sequence.push(TransportSequence::Tempo(tempo));
+
+        let xml = quick_xml::se::to_string(&transport)?;
+        let deserialized: Transport = quick_xml::de::from_str(&xml)?;
+        assert_eq!(transport, deserialized);
+        Ok(())
+    }
+
+    #[test]
+    pub fn round_trip_metadata_xml() -> Result<(), Box<dyn Error>> {
+        let metadata = MetaData::new_test();
+        let xml = quick_xml::se::to_string(&metadata)?;
+        let deserialized: MetaData = quick_xml::de::from_str(&xml)?;
+        assert_eq!(metadata, deserialized);
         Ok(())
     }
 
